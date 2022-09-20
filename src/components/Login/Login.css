@@ -244,8 +244,8 @@
 }
 
 .password .content__input .show__password{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     background: none;
     margin-right: 1vh;
     border: none;
@@ -345,5 +345,9 @@
     z-index: 3;
     background-color: white;
     margin-left: 10%;
+}
+
+.sign__up__link{
+    cursor: pointer;
 }
 

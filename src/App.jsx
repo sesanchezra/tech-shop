@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Login from './components/Login/Login'
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import Home from './components/Home/Home'
+import SignUp from './components/SignUp/SignUp'
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path='/' element={<Login/>}/>
+        <Route path='/signup' element={<SignUp />}/>
         <Route element={<ProtectedRoutes />}>
           <Route path='/home' element={<Home />}/>
         </Route>

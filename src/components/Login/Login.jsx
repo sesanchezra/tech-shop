@@ -44,12 +44,12 @@ const Login = () => {
             password: data.password
         }
 
-        const URL=`https://ecommerce-api-react.herokuapp.com/api/v1/users/login`
+        const URL=`https://api.escuelajs.co/api/v1/auth/login`
 
         axios.post(URL,user)
             .then(res => {
-                localStorage.setItem('token',res.data.data.token)
-                dispatch(setUser(res.data.data.user))
+                console.log(res.data)
+                localStorage.setItem('token',res.data["access_token"])
                 navigate('/home')
             })
             .catch (error => {
@@ -151,7 +151,7 @@ const Login = () => {
                     </button>
                     <div className='sign__up'>
                         <p>Don't have an account?</p>
-                        <a href="">Sign Up </a>
+                        <a onClick={()=>navigate('/signup')} className='sign__up__link'>Sign Up </a>
                     </div>
                 </div>
 
