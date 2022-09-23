@@ -8,10 +8,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import {setUser} from '../../store/slices/user.slice'
 import ErrorLogin from './ErrorLogin'
 import TechLogo from '../../assets/TechLogo.png'
 import TechLogoGrey from '../../assets/TechLogo-Grey.png'
+
 
 const defaultValue = {
     email: '',
@@ -40,16 +40,17 @@ const Login = () => {
     const login = (data) =>{
 
         const user = {
-            email: data.email,
-            password: data.password
+            email: "sesanchezra@gmail.com",
+            password: '1234567890'
         }
 
-        const URL=`https://api.escuelajs.co/api/v1/auth/login`
+        const URL=`https://ecommerce-api-react.herokuapp.com/api/v1/users/login`
 
         axios.post(URL,user)
             .then(res => {
                 console.log(res.data)
-                localStorage.setItem('token',res.data["access_token"])
+                localStorage.setItem('token',res.data.data.token)
+                localStorage.setItem('user',JSON.stringify(res.data.data.user))
                 navigate('/home')
             })
             .catch (error => {
@@ -71,6 +72,7 @@ const Login = () => {
         if(remember === 'active'){
             window.onbeforeunload = function() {
                 localStorage.removeItem('token');
+                localStorage.removeItem('user');
                 return '';
             };
             
@@ -80,6 +82,7 @@ const Login = () => {
             setRemember('active')
         }
     }
+
     
     
 
@@ -89,6 +92,7 @@ const Login = () => {
             {
                 errorLogin && <ErrorLogin setErrorLogin={setErrorLogin}/>
             }
+            
             <div className='login__img'>
                 {/* <div className='background'></div> */}
                 <img src={TechLogo} alt="cart" className='cart'/>
@@ -151,7 +155,7 @@ const Login = () => {
                     </button>
                     <div className='sign__up'>
                         <p>Don't have an account?</p>
-                        <a onClick={()=>navigate('/signup')} className='sign__up__link'>Sign Up </a>
+                        <a /*onClick={()=>navigate('/signup')}*/ className='sign__up__link'>Sign Up </a>
                     </div>
                 </div>
 

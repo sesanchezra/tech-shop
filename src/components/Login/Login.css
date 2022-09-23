@@ -29,7 +29,7 @@
 
 .login__img{
     position: relative;
-    top:-5vh;
+    top:-3vh;
     right: auto;
     display: flex;
     flex-direction: row;
@@ -259,10 +259,11 @@
 .login__form__button{
     background: var(--dark);
     color: var(--light);
-    height: 50px;
+    height: 55px;
     border-radius: 20px;
     font-size: 15px;
     font-weight: 400 ;
+    border: none;
 }
 
 .sign__up{

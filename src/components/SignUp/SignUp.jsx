@@ -34,13 +34,15 @@ const SignUp = () => {
     const submit = (data) => {
 
         const user = {
-            name: data?.name,
+            firstName: data?.firstName,
+            lastName: data?.lastName,
             email: data?.email,
             password: data?.password,
-            avatar: `https://source.unsplash.com/random/200x200/?avatar`
+            phone: data?.phone,
+            role: "admin"
         }
 
-        const URL = `https://api.escuelajs.co/api/v1/users/`
+        const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/users`
 
         axios.post(URL, user)
             .then(res => {
@@ -76,8 +78,17 @@ const SignUp = () => {
                             <FontAwesomeIcon icon={faUser} className='register__icon' />
                         </div>
                         <div className='content'>
-                            <label htmlFor="name">Name</label>
-                            <input type="text" placeholder='First name' {...register('name')} />
+                            <label htmlFor="name">First name</label>
+                            <input type="text" placeholder='First name' {...register('firstName')} />
+                        </div>
+                    </div>
+                    <div className='register'>
+                        <div className='icon'>
+                            <FontAwesomeIcon icon={faUser} className='register__icon' />
+                        </div>
+                        <div className='content'>
+                            <label htmlFor="name">Last name</label>
+                            <input type="text" placeholder='First name' {...register('lastName')} />
                         </div>
                     </div>
                     <div className='register'>
@@ -87,6 +98,15 @@ const SignUp = () => {
                         <div className='content'>
                             <label htmlFor="email">Email</label>
                             <input type="text" placeholder='example@gmail.com' {...register('email')} />
+                        </div>
+                    </div>
+                    <div className='register'>
+                        <div className='icon'>
+                            <FontAwesomeIcon icon={faPhone} className='register__icon' />
+                        </div>
+                        <div className='content'>
+                            <label htmlFor="email">Phone</label>
+                            <input type="text" placeholder='example@gmail.com' {...register('phone')} />
                         </div>
                     </div>
 
