@@ -1,10 +1,23 @@
+:root{
+    --dark: rgb(19, 19, 19);
+    --light-dark: rgb(35, 38, 45);
+    --grey: rgb(180, 181, 183);
+    --light: rgb(247, 247, 249);
+}
+
+
+
 .ProductCard{
-    height: 220px;
-    width: 310px;
+    height: 250px;
+    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 20px;
+    box-sizing: border-box;
+    padding: 3%;
+    box-shadow: 0px 40px 60px -30px rgb(180, 181, 183,0.6);
 }
 
 .ProductCard .images{
@@ -20,4 +33,56 @@
     height: 150px;
     scroll-snap-align: center;
     flex: 0 0 100%;
+}
+
+.ProductCard .footer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* border: 1px solid red; */
+    margin-top: 4%;
+}
+
+.ProductCard .footer .description{
+    /* border: 1px solid blue; */
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: flex-start;
+    margin-left: 4%;
+}
+
+.ProductCard .footer .description h3,h5{
+    margin: 0;
+}
+
+.ProductCard .footer .description h5{
+    color: rgb(180, 181, 183,0.6);
+}
+
+
+.ProductCard .footer .cart__button{
+    background-color: var(--dark);
+    border: none;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    padding: 0;
+}
+
+.ProductCard .footer .cart__button > svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ProductCard .footer .cart__button > svg >  path{
+    width: 100%;
+    height: 100%;
 }

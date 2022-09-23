@@ -125,13 +125,13 @@
 
 .products{
     width: 100%;
-    margin-top: 5%;
+    margin-top: 9%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4vh;
-
+    gap: 6vh;
+    padding-bottom: 40%;
 }
 
 
