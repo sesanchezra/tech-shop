@@ -28,7 +28,7 @@
     justify-content: space-evenly;
     align-items: center;
     position:fixed;
-    top: 92vh;
+    top: 85vh;
     z-index: 5;
     border-radius: 20px;
 }

@@ -20,12 +20,12 @@
 
 .homePage__header{
     width: 100%;
-    padding: 3% 4% 1% 4%;
     height: 75px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin: 6% 4% 1% 4%;
 }
 
 .homePage__header .user{
@@ -124,7 +124,14 @@
 }
 
 .products{
+    width: 100%;
     margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4vh;
+
 }
 
 

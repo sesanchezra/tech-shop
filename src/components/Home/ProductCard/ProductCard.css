@@ -1,9 +1,23 @@
 .ProductCard{
-    width: 300px;
-    aspect-ratio: 0.8;
-    border: 1px solid red;
+    height: 220px;
+    width: 310px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.ProductCard .images{
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.ProductCard .images .images__item{
+    object-fit: contain;
+    height: 150px;
+    scroll-snap-align: center;
+    flex: 0 0 100%;
 }
