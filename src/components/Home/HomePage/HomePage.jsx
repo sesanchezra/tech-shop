@@ -73,6 +73,33 @@ const HomePage = () => {
         reset(defaultValue)
     }
 
+
+    //Filter functionality
+
+    // console.log(categoryActive)
+
+    // console.log(products)
+
+    const [filterProducts, setFilterProducts] = useState()
+    useEffect(() => {
+
+        let arrayFilter = products?.filter(product => {
+            if (categoryActive != 'All') {
+                if (product.category.name.toLowerCase() === categoryActive.toLowerCase()) {
+                    return true
+                }
+            }
+            else if (categoryActive === 'All') {
+                return true
+            }
+        })
+
+        setFilterProducts(arrayFilter)
+    }, [categoryActive])
+
+    // console.log(filterProducts)
+
+
     return (
         <div className='HomePage'>
             <div className='homePage__header'>
@@ -122,8 +149,9 @@ const HomePage = () => {
                             }
                             setCategoryActive={setCategoryActive}
                             categoryActive={categoryActive}
+
                         />
-                    :
+                        :
                         <>
                             <Category
                                 key={'all'}
@@ -136,6 +164,7 @@ const HomePage = () => {
                                 }
                                 setCategoryActive={setCategoryActive}
                                 categoryActive={categoryActive}
+
                             />
                             {
                                 categories?.map(category => (
@@ -144,6 +173,7 @@ const HomePage = () => {
                                         category={category}
                                         setCategoryActive={setCategoryActive}
                                         categoryActive={categoryActive}
+
                                     />
                                 ))
                             }
@@ -164,12 +194,21 @@ const HomePage = () => {
                             />
                         ))
                         :
-                        products?.map(product => (
-                            <ProductCard
-                                key={product.title}
-                                product={product}
-                            />
-                        ))
+                        categoryActive === 'All' ?
+
+                            products?.map(product => (
+                                <ProductCard
+                                    key={product.title}
+                                    product={product}
+                                />
+                            ))
+                        :
+                            filterProducts?.map(product => (
+                                <ProductCard
+                                    key={product.title}
+                                    product={product}
+                                />
+                            ))
                 }
             </div>
         </div>

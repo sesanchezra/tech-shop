@@ -8,8 +8,8 @@ const ProductCard = ({ product }) => {
     const [positionScroll, setPositionScroll] = useState('start')
 
     const handleScroll = event =>{
-        console.log('Scroll Left', event.currentTarget.scrollLeft);
-        // console.log(window.screen.width/0.602409)
+        
+        
         if(event.currentTarget.scrollLeft<=(window.screen.width/0.5421681) && event.currentTarget.scrollLeft>=(window.screen.width/0.6626499)){
             setPositionScroll('end')
         }
