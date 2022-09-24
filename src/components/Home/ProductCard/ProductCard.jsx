@@ -9,13 +9,13 @@ const ProductCard = ({ product }) => {
 
     const handleScroll = event =>{
         // console.log('Scroll Left', event.currentTarget.scrollLeft);
-        if(event.currentTarget.scrollLeft===684){
+        if(event.currentTarget.scrollLeft<=684 && event.currentTarget.scrollLeft>=444){
             setPositionScroll('end')
         }
-        else if (event.currentTarget.scrollLeft===343){
+        else if (event.currentTarget.scrollLeft<=443 && event.currentTarget.scrollLeft>=243){
             setPositionScroll('middle')
         }
-        else if(event.currentTarget.scrollLeft===0){
+        else if(event.currentTarget.scrollLeft>=0 && event.currentTarget.scrollLeft<=242 ){
             setPositionScroll('start')
         }
     }
