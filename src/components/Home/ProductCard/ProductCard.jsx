@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ProductCard.css'
 import { GiShoppingBag } from "react-icons/gi";
 import { IconContext } from 'react-icons/lib';
 
 const ProductCard = ({ product }) => {
+
+    const [positionScroll, setPositionScroll] = useState('start')
+
+    const handleScroll = event =>{
+        // console.log('Scroll Left', event.currentTarget.scrollLeft);
+        if(event.currentTarget.scrollLeft===684){
+            setPositionScroll('end')
+        }
+        else if (event.currentTarget.scrollLeft===343){
+            setPositionScroll('middle')
+        }
+        else if(event.currentTarget.scrollLeft===0){
+            setPositionScroll('start')
+        }
+    }
     return (
         <div className='ProductCard'>
-            <div className='images'>
+            <div className='images' onScroll={handleScroll}>
                 {
-                    product.productImgs.map(image => (
-                        <img src={image} alt={image} className='images__item' />
+                    product.productImgs.map((image,index) => (
+                        <img src={image} alt={image} className='images__item' key={index}/>
                     ))
                 }
+            </div>
+            <div className=''>
+
+            </div>
+            <div className='index__points'>
+                <div className={positionScroll=== 'start' ? 'active' : 'inactive'}></div>
+                <div className={positionScroll=== 'middle' ? 'active' : 'inactive'}></div>
+                <div className={positionScroll=== 'end' ? 'active' : 'inactive'}></div>
             </div>
             <div className='footer'>
                 <div className='description'>
