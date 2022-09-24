@@ -8,14 +8,15 @@ const ProductCard = ({ product }) => {
     const [positionScroll, setPositionScroll] = useState('start')
 
     const handleScroll = event =>{
-        // console.log('Scroll Left', event.currentTarget.scrollLeft);
-        if(event.currentTarget.scrollLeft<=684 && event.currentTarget.scrollLeft>=444){
+        console.log('Scroll Left', event.currentTarget.scrollLeft);
+        // console.log(window.screen.width/0.602409)
+        if(event.currentTarget.scrollLeft<=(window.screen.width/0.5421681) && event.currentTarget.scrollLeft>=(window.screen.width/0.6626499)){
             setPositionScroll('end')
         }
-        else if (event.currentTarget.scrollLeft<=443 && event.currentTarget.scrollLeft>=243){
+        else if (event.currentTarget.scrollLeft<=(window.screen.width/1.086327) && event.currentTarget.scrollLeft>=(window.screen.width/1.3240733)){
             setPositionScroll('middle')
         }
-        else if(event.currentTarget.scrollLeft>=0 && event.currentTarget.scrollLeft<=242 ){
+        else if(event.currentTarget.scrollLeft===0){
             setPositionScroll('start')
         }
     }
