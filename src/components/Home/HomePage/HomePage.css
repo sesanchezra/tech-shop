@@ -123,6 +123,7 @@
     margin-top: 5%;
 }
 
+
 .products{
     width: 100%;
     margin-top: 9%;
@@ -132,6 +133,37 @@
     justify-content: center;
     gap: 6vh;
     padding-bottom: 40%;
+}
+.products .back{
+    width: 35px;
+    height: 35px;
+    border-radius: 17.5px;
+    background-color: var(--grey);
+    border: none;
+    position: absolute;
+    bottom: 79.5%;
+    right: 6vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+    margin-top: 10%;
+}
+
+.products .error__notFound{
+    width: 100%;
+    margin-top: 9%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6vh;
+    padding-bottom: 40%;
+}
+
+.products .error__notFound > img{
+    width: 300px;
+    object-fit: contain;
 }
 
 

@@ -8,6 +8,8 @@ import axios from 'axios';
 import Category from '../Category/Category';
 import ProductCard from '../ProductCard/ProductCard';
 import { useForm } from 'react-hook-form';
+import { BiArrowBack } from "react-icons/bi";
+import NotFound from '../../../assets/NotFound.png'
 
 const defaultValue = {
     search: ''
@@ -28,18 +30,21 @@ const HomePage = () => {
     }, [])
 
     const [products, setProducts] = useState()
-    const [allClick, setallClick] = useState(false)
+    const [allClick, setAllClick] = useState(false)
+    const [categoryActive, setCategoryActive] = useState('All')
 
     useEffect(() => {
         const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/products'
         axios.get(URL)
-            .then(res => setProducts(res.data.data.products))
+            .then(res => {
+                setProducts(res.data.data.products)
+                setCategoryActive('All')
+            })
             .catch(error => console.log(error))
     }, [allClick])
 
 
 
-    const [categoryActive, setCategoryActive] = useState('All')
 
 
     //Search Functionality
@@ -99,6 +104,10 @@ const HomePage = () => {
 
     // console.log(filterProducts)
 
+    const back = () => {
+        setAllClick(true)
+        setSearchActive('')
+    }
 
     return (
         <div className='HomePage'>
@@ -183,16 +192,33 @@ const HomePage = () => {
 
             </div>
 
+
             <div className='products'>
 
                 {
                     searchActive ?
-                        searchResult?.map(product => (
-                            <ProductCard
-                                key={product.title}
-                                product={product}
-                            />
-                        ))
+                        <>
+                            <IconContext.Provider value={{ size: '1.6em', color: 'rgb(35, 38, 45,0.6)' }}>
+                                <button className='back' onClick={back}>
+                                    <BiArrowBack />
+                                </button>
+                            </IconContext.Provider>
+                            {
+                                searchResult.length>0 ?
+
+                                    searchResult?.map(product => (
+                                        <ProductCard
+                                            key={product.title}
+                                            product={product}
+                                        />
+                                    ))
+                                :
+                                    <div className='error__notFound'>
+                                        <img src={NotFound} alt="ERROR" />
+                                        <h4>Not Matches Found</h4>
+                                    </div>
+                            }
+                        </>
                         :
                         categoryActive === 'All' ?
 
@@ -202,7 +228,7 @@ const HomePage = () => {
                                     product={product}
                                 />
                             ))
-                        :
+                            :
                             filterProducts?.map(product => (
                                 <ProductCard
                                     key={product.title}
