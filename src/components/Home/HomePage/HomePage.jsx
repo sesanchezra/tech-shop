@@ -147,19 +147,26 @@ const HomePage = () => {
             <div className='categories'>
                 {
                     searchActive ?
-                        <Category
-                            key={'all'}
-                            category={
-                                {
-                                    "id": 0,
-                                    "name": 'All',
-                                    "status": "active"
+                        <>
+                            <Category
+                                key={'all'}
+                                category={
+                                    {
+                                        "id": 0,
+                                        "name": 'All',
+                                        "status": "active"
+                                    }
                                 }
-                            }
-                            setCategoryActive={setCategoryActive}
-                            categoryActive={categoryActive}
+                                setCategoryActive={setCategoryActive}
+                                categoryActive={categoryActive}
 
-                        />
+                            />
+                            <IconContext.Provider value={{ size: '1.6em', color: 'rgb(35, 38, 45,0.6)' }}>
+                                <button className='back' onClick={back}>
+                                    <BiArrowBack />
+                                </button>
+                            </IconContext.Provider>
+                        </>
                         :
                         <>
                             <Category
@@ -197,28 +204,20 @@ const HomePage = () => {
 
                 {
                     searchActive ?
-                        <>
-                            <IconContext.Provider value={{ size: '1.6em', color: 'rgb(35, 38, 45,0.6)' }}>
-                                <button className='back' onClick={back}>
-                                    <BiArrowBack />
-                                </button>
-                            </IconContext.Provider>
-                            {
-                                searchResult.length>0 ?
-
-                                    searchResult?.map(product => (
-                                        <ProductCard
-                                            key={product.title}
-                                            product={product}
-                                        />
-                                    ))
+                        
+                            (searchResult.length > 0) ?
+                                searchResult?.map(product => (
+                                    <ProductCard
+                                        key={product.title}
+                                        product={product}
+                                    />
+                                ))
                                 :
-                                    <div className='error__notFound'>
-                                        <img src={NotFound} alt="ERROR" />
-                                        <h4>Not Matches Found</h4>
-                                    </div>
-                            }
-                        </>
+                                <div className='error__notFound'>
+                                    <img src={NotFound} alt="ERROR" />
+                                    <h4>Not Matches Found</h4>
+                                </div>
+                        
                         :
                         categoryActive === 'All' ?
 

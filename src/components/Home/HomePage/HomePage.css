@@ -134,15 +134,15 @@
     gap: 6vh;
     padding-bottom: 40%;
 }
-.products .back{
+.categories .back{
     width: 35px;
     height: 35px;
     border-radius: 17.5px;
     background-color: var(--grey);
     border: none;
     position: absolute;
-    bottom: 79.5%;
-    right: 6vw;
+    right: 5vw;
+    top: 12.3vh;
     display: flex;
     justify-content: center;
     align-items: center;
