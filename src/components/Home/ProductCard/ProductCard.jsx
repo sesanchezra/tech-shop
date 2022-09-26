@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './ProductCard.css'
 import { GiShoppingBag } from "react-icons/gi";
 import { IconContext } from 'react-icons/lib';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
 
@@ -20,8 +21,15 @@ const ProductCard = ({ product }) => {
             setPositionScroll('start')
         }
     }
+
+    const navigate=useNavigate()
+    // console.log(product)
+    const goToDetails=()=>{
+        navigate(`/productdetail/${product.id}`)
+    }
+
     return (
-        <div className='ProductCard'>
+        <div className='ProductCard' onClick={goToDetails}>
             <div className='images' onScroll={handleScroll}>
                 {
                     product.productImgs.map((image,index) => (

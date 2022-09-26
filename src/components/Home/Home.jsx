@@ -4,9 +4,6 @@ import { useEffect } from 'react'
 import '../Home/Home.css'
 import { getProducts } from '../../store/slices/products.slice'
 import { useDispatch, useSelector } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBagShopping } from '@fortawesome/free-solid-svg-icons'
-import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom'
 import Favorite from './Favorite/Favorite'
 import { AiFillHeart, AiOutlineHeart, AiFillHome, AiOutlineHome } from "react-icons/ai";
