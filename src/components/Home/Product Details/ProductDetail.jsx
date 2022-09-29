@@ -24,7 +24,7 @@ const ProductDetail = () => {
                 return true
             }
         })
-        if (filter.length > 0) {
+        if (filter?.length > 0) {
             setLikeColor('red')
             setIsLike(true)
         }
