@@ -49,6 +49,7 @@ const Home = () => {
         setCart(true)
         
     }
+    
 
 
     return (
@@ -98,7 +99,7 @@ const Home = () => {
             </div>
             {
                 homeActive ?
-                    <HomePage />
+                    <HomePage/>
                     :
                     favorite ?
                         <Favorite />

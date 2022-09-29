@@ -73,6 +73,7 @@ const Login = () => {
             window.onbeforeunload = function() {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
+                localStorage.removeItem('favorites');
                 return '';
             };
             

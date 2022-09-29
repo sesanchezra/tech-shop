@@ -10,6 +10,8 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useForm } from 'react-hook-form';
 import { BiArrowBack } from "react-icons/bi";
 import NotFound from '../../../assets/NotFound.png'
+import { useDispatch, useSelector } from 'react-redux';
+import {getProducts} from '../../../store/slices/products.slice'
 
 const defaultValue = {
     search: ''
@@ -29,22 +31,15 @@ const HomePage = () => {
             .catch(error => console.log(error))
     }, [])
 
-    const [products, setProducts] = useState()
     const [allClick, setAllClick] = useState(false)
     const [categoryActive, setCategoryActive] = useState('All')
+    const dispatch = useDispatch()
+    const products = useSelector(state => state.products)
 
     useEffect(() => {
-        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/products'
-        axios.get(URL)
-            .then(res => {
-                setProducts(res.data.data.products)
-                setCategoryActive('All')
-            })
-            .catch(error => console.log(error))
+        dispatch(getProducts())
+        setCategoryActive('All')
     }, [allClick])
-
-
-
 
 
     //Search Functionality
@@ -72,8 +67,9 @@ const HomePage = () => {
 
         })
 
-        let filter = new Set(searchResult);
-        let result = [...filter]
+        //Esto me permite quitar duplicados
+        let filter = new Set(searchResult); 
+        let result = [...filter] //Esta línea de código filtra
         setSearchResult(result)
         reset(defaultValue)
     }
@@ -81,9 +77,6 @@ const HomePage = () => {
 
     //Filter functionality
 
-    // console.log(categoryActive)
-
-    // console.log(products)
 
     const [filterProducts, setFilterProducts] = useState()
     useEffect(() => {
@@ -101,8 +94,6 @@ const HomePage = () => {
 
         setFilterProducts(arrayFilter)
     }, [categoryActive])
-
-    // console.log(filterProducts)
 
     const back = () => {
         setAllClick(true)
@@ -220,7 +211,6 @@ const HomePage = () => {
                         
                         :
                         categoryActive === 'All' ?
-
                             products?.map(product => (
                                 <ProductCard
                                     key={product.title}

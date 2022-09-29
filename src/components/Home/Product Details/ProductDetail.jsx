@@ -6,21 +6,51 @@ import { BiArrowBack } from "react-icons/bi";
 import { AiFillHeart } from "react-icons/ai";
 import './ProductDetail.css';
 import TechLogo from '../../../assets/TechLogo-Grey.png'
+import { setFavorites } from '../../../store/slices/favorites.slice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetail = () => {
 
     const { id } = useParams()
     const [product, setProduct] = useState()
+    const [likeColor, setLikeColor] = useState()
+    const [isLike, setIsLike] = useState()
+    const [likeClicked, setLikeClicked] = useState(false)
+
+    const verifyLike = (id) => {
+        let favorites = JSON.parse(localStorage.getItem('favorites'))
+        let filter = favorites?.filter(favorite => {
+            if (favorite?.id === Number(id)) {
+                return true
+            }
+        })
+        if (filter.length > 0) {
+            setLikeColor('red')
+            setIsLike(true)
+        }
+        else {
+            setLikeColor('rgb(19,19,19)')
+            setIsLike(false)
+        }
+    }
+
+    useEffect(() => {
+        verifyLike(id)
+    }, [likeClicked])
 
     useEffect(() => {
         const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/products/${id}`
         axios.get(URL)
-            .then(res => setProduct(res.data.data.product))
+            .then(res => {
+                setProduct(res.data.data.product)
+                
+            })
             .catch(error => console.log(error))
+
 
     }, [])
 
-    console.log(product)
+    // console.log(product)
 
     const navigate = useNavigate()
 
@@ -40,6 +70,81 @@ const ProductDetail = () => {
         }
     }
 
+    //Add to cart
+
+    const addToCart = () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+
+        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart'
+
+        const productToAdd = {
+            id: product?.id,
+            quantity: 1
+        }
+
+        axios.post(URL, config, productToAdd)
+            .then(res => console.log(res.data.data))
+            .catch(error => console.log(error))
+    }
+
+
+    // Favorites function
+
+
+    const addFavorites = () => {
+        if (isLike === false) {
+            let favorites = JSON.parse(localStorage.getItem('favorites'))
+            let newFavorites = []
+            if (favorites === null) {
+                newFavorites.push(product)
+                localStorage.setItem('favorites', JSON.stringify(newFavorites))
+                dispatch(setFavorites(newFavorites))
+            }
+            else {
+
+                favorites.push(product)
+                let newFavoritesFilter = favorites?.filter(favorite => {
+                    if (favorite?.id === product?.id) {
+                        return false
+                    }
+                    else {
+                        return true
+                    }
+                }
+                )
+                newFavoritesFilter.push(product)
+                localStorage.setItem('favorites', JSON.stringify(newFavoritesFilter))
+            }
+            setLikeClicked(!likeClicked)
+        }
+        else{
+            let favorites = JSON.parse(localStorage.getItem('favorites'))
+            let filter = favorites?.filter( favorite => {
+                if (favorite?.id === product?.id) {
+                    return false
+                }
+                else {
+                    return true
+                }
+            })
+            localStorage.setItem('favorites', JSON.stringify(filter))
+            setLikeClicked(!likeClicked)
+        }
+
+
+
+    }
+
+
+
+
+
+
+
     return (
         <div className='ProductDetail'>
             <div className='productDetail__header'>
@@ -50,8 +155,8 @@ const ProductDetail = () => {
                 </IconContext.Provider>
                 <img src={TechLogo} alt="Logo" className='img__header' />
 
-                <IconContext.Provider value={{ size: '1.8em', color: 'rgb(19, 19, 19)' }}>
-                    <button className='header__button'>
+                <IconContext.Provider value={{ size: '1.8em', color: `${likeColor}` }}>
+                    <button className='header__button' onClick={addFavorites}>
                         <AiFillHeart />
                     </button>
                 </IconContext.Provider>
@@ -83,9 +188,9 @@ const ProductDetail = () => {
                         <h4>Price</h4>
                         <h2>{`$ ${product?.price}`}</h2>
                     </div>
-                        <button className='button__cart'>
-                            Add to Bag
-                        </button>
+                    <button className='button__cart' onClick={addToCart}>
+                        Add to Bag
+                    </button>
                 </div>
             </div>
         </div>
