@@ -102,7 +102,9 @@ const Home = () => {
                     <HomePage/>
                     :
                     favorite ?
-                        <Favorite />
+                        <Favorite
+                            homeToggle={homeToggle}
+                        />
                         :
                         cart && <Cart />
                         

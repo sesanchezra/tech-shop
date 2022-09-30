@@ -6,7 +6,7 @@ import TechLogo from '../../../assets/TechLogo-Grey.png'
 import '../Favorite/Favorite.css'
 import FavoriteCard from '../FavoriteCard/FavoriteCard';
 
-const Favorite = () => {
+const Favorite = ({homeToggle}) => {
 
     const navigate = useNavigate()
 
@@ -22,7 +22,7 @@ const Favorite = () => {
         <div className='Favorite'>
             <div className='Favorite__header'>
                 <IconContext.Provider value={{ size: '1.6em', color: 'rgb(19, 19, 19)' }}>
-                    <button className='header__button' onClick={() => navigate(-1)}>
+                    <button className='header__button' onClick={homeToggle}>
                         <BiArrowBack />
                     </button>
                 </IconContext.Provider>
