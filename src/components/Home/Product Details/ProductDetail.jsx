@@ -102,7 +102,6 @@ const ProductDetail = () => {
             if (favorites === null) {
                 newFavorites.push(product)
                 localStorage.setItem('favorites', JSON.stringify(newFavorites))
-                dispatch(setFavorites(newFavorites))
             }
             else {
 

@@ -1,0 +1,88 @@
+:root{
+    --dark: rgb(19, 19, 19);
+    --light-dark: rgb(35, 38, 45);
+    --grey: rgb(180, 181, 183);
+    --light: rgb(219, 219, 219);
+}
+
+
+.favoriteCard{
+    width: 40vw;
+    height: 40vw;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 40px 60px -30px rgb(180, 181, 183,0.6);
+}
+
+.favoriteCard:hover{
+    transform:translateY(2%);
+    box-shadow: 0px 40px 90px -30px rgb(180, 181, 183,1);
+    transition: transform  0.2s ease-out;
+    
+}
+
+.favoriteCard .favoriteCard__slider{
+    width: 55%;
+    aspect-ratio: 1;
+    scroll-snap-type:x mandatory;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+}
+
+.favoriteCard .favoriteCard__slider .item__slider{
+    flex: 0 0 100%;
+    width: 100%;
+    object-fit: contain;
+    scroll-snap-align: center;
+}
+
+.favoriteCard .favoriteCard__description{
+    width: 80%;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative;
+}
+
+.favoriteCard .favoriteCard__description h6,p{
+    margin:0;
+    
+}
+
+.favoriteCard .favoriteCard__description p{
+    font-size: 14px;
+    color: var(--grey);
+}
+
+
+.favoriteCard .like__button{
+    position: absolute;
+    right: 0;
+    top: -5%;
+    right: -5%;
+    width: 35px;
+    height: 35px;
+    border-radius: 17.5px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favoriteCard .like__button:hover{
+    transform: scale(1.04);
+    transition: transform 0.1s ease-in-out;
+}
+
+.favoriteCard .like__button > svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
