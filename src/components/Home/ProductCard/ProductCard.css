@@ -115,6 +115,7 @@
     align-items: center;
     border-radius: 14px;
     padding: 0;
+    z-index: 6;
 }
 
 .ProductCard .footer .cart__button > svg{
@@ -140,7 +141,7 @@
     height: 100%;
     width: 100%;
     z-index: 4;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
     background-color: rgb(247, 247, 249,0.3);
 }
 
