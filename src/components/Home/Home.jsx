@@ -108,7 +108,10 @@ const Home = () => {
                             homeToggle={homeToggle}
                         />
                         :
-                        cart && <Cart />
+                        cart && 
+                        <Cart
+                        homeToggle={homeToggle}
+                        />
                         
 
             }

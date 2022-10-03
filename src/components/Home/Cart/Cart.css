@@ -1,10 +1,8 @@
-.Favorite{
+.cart{
     width: 100vw;
-    display: flex;
-    flex-direction: column;
 }
 
-.Favorite__header{
+.cart .cart__header{
     width: 100%;
     height: 12vh;
     display: flex;
@@ -13,15 +11,14 @@
     align-items: center;
 }
 
-.Favorite__header .img__header{
+.cart .cart__header .img__header{
     object-fit: contain;
     height: 4vh;
     position: relative;
     left: 30.5vw;
-    
 }
 
-.Favorite__header .header__button{
+.cart .cart__header .header__button{
     width: 40px;
     height: 40px;
     border-radius: 10px;
@@ -32,13 +29,18 @@
     margin-left: 8vw;
 }
 
-.favorites{
-    width: 100vw;
+
+.cart .cart__empty{
     display: flex;
-    flex-wrap: wrap;
-    gap: 4vw;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 18vh;
-    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    top: 50%;
+}
+
+.cart .cart__empty > img{
+    position: relative;
+    left: 5%;
 }

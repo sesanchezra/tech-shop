@@ -162,7 +162,7 @@
 }
 
 .products .error__notFound > img{
-    width: 300px;
+    width: 150px;
     object-fit: contain;
 }
 

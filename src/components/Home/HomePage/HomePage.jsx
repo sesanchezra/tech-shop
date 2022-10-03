@@ -225,9 +225,9 @@ const HomePage = ({ cartToggle }) => {
                                     showError={showError}
                                 />
                             ))
-                            :
+                        :
                             <div className='error__notFound'>
-                                <img src={NotFound} alt="ERROR" />
+                                <img src={NotFound} alt="ERROR" className='error__img'/>
                                 <h4>Not Matches Found</h4>
                             </div>
 
