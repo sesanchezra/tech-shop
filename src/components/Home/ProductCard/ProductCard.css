@@ -131,10 +131,57 @@
 .ProductCard .seeMore{
     width: 50%;
     height: 20%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 4;
+    backdrop-filter: blur(2px);
+    background-color: rgb(247, 247, 249,0.3);
 }
 
-.ProductCard .seeMore button{
-    border: none;
-    background-color: var(--light);
-    color: black;
+.ProductCard .seeMore .more__button{
+        background: #fff; /* color de fondo */
+        color: var(--dark); /* color de fuente */
+        border: 2px solid var(--dark); /* tamaño y color de borde */
+        padding: 16px 20px;
+        border-radius: 8px; /* redondear bordes */
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        display: inline-block;
+        background-color: var(--light);
+}
+
+.ProductCard .seeMore .more__button:hover{
+        color: #fff; /* color de fuente hover */
+    
+}
+
+.ProductCard .seeMore .more__button::after{
+    content: "";
+    background: var(--dark); /* color de fondo hover */
+    position: absolute;
+    z-index: -1;
+    padding: 16px 20px;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: -100%;
+    right: 100%;
+    -webkit-transition: all 0.35s;
+    transition: all 0.35s;
+}
+
+.ProductCard .seeMore .more__button:hover::after{
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: all 0.35s;
+    transition: all 0.35s;
 }

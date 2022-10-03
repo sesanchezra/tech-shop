@@ -63,12 +63,14 @@ const ProductCard = ({ product, cartToggle }) => {
         
     }
 
+    const [hoverSee, setHoverSee] = useState(false)
+
     return (
         <div className='ProductCard' onMouseOver={()=> setDetailsOver(true)} onMouseOut={()=> setDetailsOver(false)}>
             {
                 detailsOver &&
-                    <div className='seeMore'>
-                        <button onClick={goToDetails}>
+                    <div className='seeMore' >
+                        <button onClick={goToDetails} className={`more__button`} onMouseOver={()=> setHoverSee(true)} onMouseOut={()=> setHoverSee(false)}>
                             See More
                         </button>
                     </div>
