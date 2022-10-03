@@ -5,7 +5,7 @@ import { IconContext } from 'react-icons/lib';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProductCard = ({ product, cartToggle }) => {
+const ProductCard = ({ product, cartToggle , showError}) => {
 
     const [positionScroll, setPositionScroll] = useState('start')
 
@@ -48,8 +48,15 @@ const ProductCard = ({ product, cartToggle }) => {
                 cartToggle()
 
             })
-            .catch (error => console.log(error))
+            .catch (error => {
+                console.log(error)
+                showError()
+            })
     }
+
+    //Show error to add cart
+
+    
 
 
     //Go to details
@@ -103,6 +110,7 @@ const ProductCard = ({ product, cartToggle }) => {
 
             </div>
         </div>
+        
     )
 }
 

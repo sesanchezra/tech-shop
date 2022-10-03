@@ -6,8 +6,8 @@ import { BiArrowBack } from "react-icons/bi";
 import { AiFillHeart } from "react-icons/ai";
 import './ProductDetail.css';
 import TechLogo from '../../../assets/TechLogo-Grey.png'
-import { setFavorites } from '../../../store/slices/favorites.slice';
-import { useDispatch, useSelector } from 'react-redux';
+import Error from '../../../assets/Error.png'
+
 
 const ProductDetail = () => {
 
@@ -43,7 +43,7 @@ const ProductDetail = () => {
         axios.get(URL)
             .then(res => {
                 setProduct(res.data.data.product)
-                
+
             })
             .catch(error => console.log(error))
 
@@ -87,12 +87,15 @@ const ProductDetail = () => {
             quantity: 1
         }
 
-        axios.post(URL, productToAdd,config)
+        axios.post(URL, productToAdd, config)
             .then(res => {
                 console.log(res.data)
                 navigate('/home')
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error)
+                showError()
+            })
     }
 
 
@@ -124,9 +127,9 @@ const ProductDetail = () => {
             }
             setLikeClicked(!likeClicked)
         }
-        else{
+        else {
             let favorites = JSON.parse(localStorage.getItem('favorites'))
-            let filter = favorites?.filter( favorite => {
+            let filter = favorites?.filter(favorite => {
                 if (favorite?.id === product?.id) {
                     return false
                 }
@@ -139,14 +142,28 @@ const ProductDetail = () => {
         }
     }
 
+    const [errorToAddCart, setErrorToAddCart] = useState(false)
 
-
-
-
+    const showError = () => {
+        setErrorToAddCart(true)
+        setTimeout(() => {
+            setErrorToAddCart(false)
+        }, 1500);
+    }
 
 
     return (
         <div className='ProductDetail'>
+            {
+                errorToAddCart &&
+                <div className='error__adding__cart'>
+                    <div className='content'>
+                        <img src={Error} alt='error' />
+                        <h5>You already added this product to the cart</h5>
+                    </div>
+
+                </div>
+            }
             <div className='productDetail__header'>
                 <IconContext.Provider value={{ size: '1.6em', color: 'rgb(19, 19, 19)' }}>
                     <button className='header__button' onClick={() => navigate(-1)}>

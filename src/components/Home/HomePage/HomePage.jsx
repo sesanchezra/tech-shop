@@ -11,14 +11,15 @@ import { useForm } from 'react-hook-form';
 import { BiArrowBack } from "react-icons/bi";
 import NotFound from '../../../assets/NotFound.png'
 import { useDispatch, useSelector } from 'react-redux';
-import {getProducts} from '../../../store/slices/products.slice'
+import { getProducts } from '../../../store/slices/products.slice'
+import Error from '../../../assets/Error.png'
 
 const defaultValue = {
     search: ''
 }
 
 
-const HomePage = ({cartToggle}) => {
+const HomePage = ({ cartToggle }) => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -68,7 +69,7 @@ const HomePage = ({cartToggle}) => {
         })
 
         //Esto me permite quitar duplicados
-        let filter = new Set(searchResult); 
+        let filter = new Set(searchResult);
         let result = [...filter] //Esta línea de código filtra
         setSearchResult(result)
         reset(defaultValue)
@@ -98,6 +99,17 @@ const HomePage = ({cartToggle}) => {
     const back = () => {
         setAllClick(true)
         setSearchActive('')
+    }
+
+    //Error adding to cart
+
+    const [errorToAddCart, setErrorToAddCart] = useState(false)
+
+    const showError = () => {
+        setErrorToAddCart(true)
+        setTimeout(() => {
+            setErrorToAddCart(false)
+        }, 1500);
     }
 
     return (
@@ -192,24 +204,33 @@ const HomePage = ({cartToggle}) => {
 
 
             <div className='products'>
-
+                {
+                    errorToAddCart &&
+                    <div className='error__adding__cart'>
+                        <div className='content'>
+                            <img src={Error} alt='error' />
+                            <h5>You already added this product to the cart</h5>
+                        </div>
+                    </div>
+                }
                 {
                     searchActive ?
-                        
-                            (searchResult.length > 0) ?
-                                searchResult?.map(product => (
-                                    <ProductCard
-                                        key={product.title}
-                                        product={product}
-                                        cartToggle={cartToggle}
-                                    />
-                                ))
-                                :
-                                <div className='error__notFound'>
-                                    <img src={NotFound} alt="ERROR" />
-                                    <h4>Not Matches Found</h4>
-                                </div>
-                        
+
+                        (searchResult.length > 0) ?
+                            searchResult?.map(product => (
+                                <ProductCard
+                                    key={product.title}
+                                    product={product}
+                                    cartToggle={cartToggle}
+                                    showError={showError}
+                                />
+                            ))
+                            :
+                            <div className='error__notFound'>
+                                <img src={NotFound} alt="ERROR" />
+                                <h4>Not Matches Found</h4>
+                            </div>
+
                         :
                         categoryActive === 'All' ?
                             products?.map(product => (
@@ -217,6 +238,7 @@ const HomePage = ({cartToggle}) => {
                                     key={product.title}
                                     product={product}
                                     cartToggle={cartToggle}
+                                    showError={showError}
                                 />
                             ))
                             :
@@ -225,6 +247,7 @@ const HomePage = ({cartToggle}) => {
                                     key={product.title}
                                     product={product}
                                     cartToggle={cartToggle}
+                                    showError={showError}
                                 />
                             ))
                 }
