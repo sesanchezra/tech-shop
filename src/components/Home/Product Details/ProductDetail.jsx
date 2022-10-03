@@ -72,6 +72,7 @@ const ProductDetail = () => {
 
     //Add to cart
 
+
     const addToCart = () => {
         const config = {
             headers: {
@@ -79,15 +80,18 @@ const ProductDetail = () => {
             }
         }
 
-        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart'
+        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart/'
 
         const productToAdd = {
             id: product?.id,
             quantity: 1
         }
 
-        axios.post(URL, config, productToAdd)
-            .then(res => console.log(res.data.data))
+        axios.post(URL, productToAdd,config)
+            .then(res => {
+                console.log(res.data)
+                navigate('/home')
+            })
             .catch(error => console.log(error))
     }
 
@@ -133,9 +137,6 @@ const ProductDetail = () => {
             localStorage.setItem('favorites', JSON.stringify(filter))
             setLikeClicked(!likeClicked)
         }
-
-
-
     }
 
 

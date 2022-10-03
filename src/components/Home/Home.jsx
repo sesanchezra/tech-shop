@@ -99,7 +99,9 @@ const Home = () => {
             </div>
             {
                 homeActive ?
-                    <HomePage/>
+                    <HomePage
+                        cartToggle={cartToggle}
+                    />
                     :
                     favorite ?
                         <Favorite

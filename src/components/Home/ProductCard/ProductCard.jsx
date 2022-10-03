@@ -3,8 +3,9 @@ import './ProductCard.css'
 import { GiShoppingBag } from "react-icons/gi";
 import { IconContext } from 'react-icons/lib';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, cartToggle }) => {
 
     const [positionScroll, setPositionScroll] = useState('start')
 
@@ -22,14 +23,56 @@ const ProductCard = ({ product }) => {
         }
     }
 
+
+    
+
+    //Add to Cart Function
+
+    const addToCart =()=>{
+        const  URL ='https://ecommerce-api-react.herokuapp.com/api/v1/cart'
+
+        const config = {
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+
+        const productToAdd = {
+            "id": product?.id,
+            "quantity": 1
+        }
+
+        axios.post(URL,productToAdd, config )
+            .then(res => {
+                console.log(res.data)
+                cartToggle()
+
+            })
+            .catch (error => console.log(error))
+    }
+
+
+    //Go to details
+
+    const [detailsOver, setDetailsOver] = useState(false)
+
     const navigate=useNavigate()
     // console.log(product)
     const goToDetails=()=>{
-        navigate(`/productdetail/${product.id}`)
+            navigate(`/productdetail/${product.id}`)
+        
     }
 
     return (
-        <div className='ProductCard' onClick={goToDetails}>
+        <div className='ProductCard' onMouseOver={()=> setDetailsOver(true)} onMouseOut={()=> setDetailsOver(false)}>
+            {
+                detailsOver &&
+                    <div className='seeMore'>
+                        <button onClick={goToDetails}>
+                            See More
+                        </button>
+                    </div>
+            }
             <div className='images' onScroll={handleScroll}>
                 {
                     product.productImgs.map((image,index) => (
@@ -51,7 +94,7 @@ const ProductCard = ({ product }) => {
                     <h5>{product.category.name}</h5>
                 </div>
                 <IconContext.Provider value={{ size: '1.7em', color: 'white' }}>
-                    <button className='cart__button'>
+                    <button className='cart__button' onClick={addToCart}>
                         <GiShoppingBag />
                     </button>
                 </IconContext.Provider>

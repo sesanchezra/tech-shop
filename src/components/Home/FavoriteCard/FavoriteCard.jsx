@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AiFillHeart } from 'react-icons/ai'
 import { IconContext } from 'react-icons/lib'
+import { useNavigate } from 'react-router-dom'
 import '../FavoriteCard/FavoriteCard.css'
 
 const FavoriteCard = ({ favorite ,setFavorites,favorites}) => {
@@ -25,9 +26,14 @@ const FavoriteCard = ({ favorite ,setFavorites,favorites}) => {
         setlikeClicked(!likeClicked)
     }
 
+    const navigate= useNavigate()
+    const goToFavorites = () =>{
+        navigate(`/productdetail/${favorite?.id}`)
+    }
+
 
     return (
-        <div className='favoriteCard'>
+        <div className='favoriteCard' onClick={goToFavorites}>
             <IconContext.Provider value={{ size: '1.2em', color: `red` }}>
                 <button className='like__button' onClick={()=>updateFavorites(favorite?.id)}>
                     <AiFillHeart />
@@ -36,7 +42,7 @@ const FavoriteCard = ({ favorite ,setFavorites,favorites}) => {
             <div className='favoriteCard__slider'>
                 {
                     favorite?.productImgs.map(image => (
-                        <img src={image} alt="product image" className='item__slider' />
+                        <img src={image} alt="product image" className='item__slider' key={image}/>
                     ))
                 }
             </div>

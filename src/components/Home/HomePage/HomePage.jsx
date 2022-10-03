@@ -18,7 +18,7 @@ const defaultValue = {
 }
 
 
-const HomePage = () => {
+const HomePage = ({cartToggle}) => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -201,6 +201,7 @@ const HomePage = () => {
                                     <ProductCard
                                         key={product.title}
                                         product={product}
+                                        cartToggle={cartToggle}
                                     />
                                 ))
                                 :
@@ -215,6 +216,7 @@ const HomePage = () => {
                                 <ProductCard
                                     key={product.title}
                                     product={product}
+                                    cartToggle={cartToggle}
                                 />
                             ))
                             :
@@ -222,6 +224,7 @@ const HomePage = () => {
                                 <ProductCard
                                     key={product.title}
                                     product={product}
+                                    cartToggle={cartToggle}
                                 />
                             ))
                 }

@@ -40,8 +40,8 @@ const Login = () => {
     const login = (data) =>{
 
         const user = {
-            email: "sesanchezra@gmail.com",
-            password: '1234567890'
+            email: data.email,
+            password: data.password
         }
 
         const URL=`https://ecommerce-api-react.herokuapp.com/api/v1/users/login`
@@ -156,7 +156,7 @@ const Login = () => {
                     </button>
                     <div className='sign__up'>
                         <p>Don't have an account?</p>
-                        <a /*onClick={()=>navigate('/signup')}*/ className='sign__up__link'>Sign Up </a>
+                        <a onClick={()=>navigate('/signup')} className='sign__up__link'>Sign Up </a>
                     </div>
                 </div>
 
