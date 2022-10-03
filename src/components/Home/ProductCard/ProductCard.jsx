@@ -59,7 +59,10 @@ const ProductCard = ({ product, cartToggle }) => {
     const navigate=useNavigate()
     // console.log(product)
     const goToDetails=()=>{
+        setTimeout(() => {
             navigate(`/productdetail/${product.id}`)
+        }, 500);
+            
         
     }
 
