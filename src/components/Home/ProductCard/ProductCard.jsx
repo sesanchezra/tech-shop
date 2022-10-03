@@ -59,11 +59,7 @@ const ProductCard = ({ product, cartToggle }) => {
     const navigate=useNavigate()
     // console.log(product)
     const goToDetails=()=>{
-        setTimeout(() => {
-            navigate(`/productdetail/${product.id}`)
-        }, 1000);
-            
-        
+        navigate(`/productdetail/${product.id}`)
     }
 
     const [hoverSee, setHoverSee] = useState(false)
