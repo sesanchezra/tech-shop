@@ -29,7 +29,7 @@
 
 .signup__img{
     position: relative;
-    top:3vh;
+    top:-5vh;
     right: auto;
     display: flex;
     flex-direction: row;

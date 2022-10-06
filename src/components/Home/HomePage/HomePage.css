@@ -179,6 +179,7 @@
     top: 35%;
     left: calc((100vw - 250px)/2);
     z-index: 10;
+    box-shadow: 10px 10px 50px 20px var(--grey);
 }
 
 .products .error__adding__cart .content{

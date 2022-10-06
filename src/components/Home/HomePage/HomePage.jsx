@@ -206,12 +206,14 @@ const HomePage = ({ cartToggle }) => {
             <div className='products'>
                 {
                     errorToAddCart &&
+
                     <div className='error__adding__cart'>
                         <div className='content'>
                             <img src={Error} alt='error' />
                             <h5>You already added this product to the cart</h5>
                         </div>
                     </div>
+
                 }
                 {
                     searchActive ?
@@ -225,9 +227,9 @@ const HomePage = ({ cartToggle }) => {
                                     showError={showError}
                                 />
                             ))
-                        :
+                            :
                             <div className='error__notFound'>
-                                <img src={NotFound} alt="ERROR" className='error__img'/>
+                                <img src={NotFound} alt="ERROR" className='error__img' />
                                 <h4>Not Matches Found</h4>
                             </div>
 
