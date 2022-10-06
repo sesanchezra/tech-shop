@@ -73,7 +73,7 @@
 }
 
 .cart__products__section .cart__product .cart__product__description{
-    width: 80%;
+    width: 60%;
     height: 150px;
     display: flex;
     flex-direction: column;
