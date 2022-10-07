@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {getCart} from '../../../store/slices/cart.slice'
 import { useDispatch } from 'react-redux';
-import swAlert from '@sweetalert/with-react'
+
 
 const ProductCard = ({ product, cartToggle , showError}) => {
 
@@ -56,11 +56,9 @@ const ProductCard = ({ product, cartToggle , showError}) => {
             .catch (error => {
                 console.log(error)
                 if(error.response.data.message === "Email is already taken"){
-                    swAlert(
-                        'Oops !',
-                        'Sorry we have problems to add this product',
-                        'error'
-                    )
+                    <div>
+                        <h2>Error</h2>
+                    </div>
                 }
                 else if(error.response.data.message === "You already added this product to the cart") {
                     showError()

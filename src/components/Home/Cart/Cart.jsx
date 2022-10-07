@@ -10,7 +10,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux'
 import { getCart, plus } from '../../../store/slices/cart.slice'
 import { getProducts } from '../../../store/slices/products.slice'
-import swAlert from '@sweetalert/with-react'
+
 
 const Cart = ({ homeToggle }) => {
 
@@ -27,7 +27,7 @@ const Cart = ({ homeToggle }) => {
     useEffect(() => {
         getCartUser()
         getProductsUser()
-        
+
     }, [])
 
     useEffect(() => {
@@ -81,35 +81,19 @@ const Cart = ({ homeToggle }) => {
                 .catch(error => console.log(error))
         }
         else if (quantity === 1) {
-            swAlert({
-                title: "Are you sure?",
-                text: `You will remove ${title} from your cart`,
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart/${id}`
+            const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart/${id}`
 
-                        const config = {
-                            headers: {
-                                Authorization: `Bearer ${localStorage.getItem('token')}`
-                            }
-                        }
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            }
 
-                        axios.delete(URL, config)
-                            .then(res => {
-                                getCartUser()
-                            })
-                            .catch(error => console.log(error))
-                        swal(`You remove ${title} from your cart`, {
-                            icon: "success",
-                        });
-                    } else {
-                        swal(`${title} was not remove from the cart`);
-                    }
-                });
+            axios.delete(URL, config)
+                .then(res => {
+                    getCartUser()
+                })
+                .catch(error => console.log(error))
 
         }
 
@@ -119,34 +103,30 @@ const Cart = ({ homeToggle }) => {
 
     useEffect(() => {
         let suma = 0
-        cart?.map(product =>{
-            suma +=(product?.price * product?.productsInCart.quantity)
-            
+        cart?.map(product => {
+            suma += (product?.price * product?.productsInCart.quantity)
+
         })
         setTotal(suma)
     }, [cart])
 
     const purchaseCart = () => {
         const config = {
-            headers:{
+            headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         }
-        const address={
+        const address = {
             "street": "Green St. 1456",
             "colony": "Southwest",
             "zipCode": 12345,
             "city": "USA",
             "references": "Some references"
         }
-        axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`,address,config)
+        axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, address, config)
             .then(res => {
                 console.log(res.data)
-                swAlert(
-                    'Thanks for your purchase',
-                    'your purchase will arrive soon at your home',
-                    'success'
-                )
+
                 getCartUser()
             })
             .catch(error => console.log(error))
@@ -169,7 +149,7 @@ const Cart = ({ homeToggle }) => {
                         <img src={Empty} alt="cart empty" />
                         <h4>My Cart is Empty</h4>
                     </div>
-                :
+                    :
                     <div className='cart__products__section'>
                         {
                             cart?.map(product => (
@@ -225,7 +205,7 @@ const Cart = ({ homeToggle }) => {
                         }
                     </div>
 
-                    
+
             }
         </div>
     )
