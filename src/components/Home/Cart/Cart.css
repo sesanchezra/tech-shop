@@ -167,34 +167,38 @@
 
 .cart__button__proceed{
     display: flex;
-    width: 75%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 80%;
     /* border: 1px solid red; */
-    margin-top: 15px;
-    height: 60px;
+    margin-top: 4%;
 }
 
 .cart__button__proceed .cart__price__total{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     height: 50px;
+    width: 50%;
 }
 
-.cart__button__proceed .cart__price__total span, h4{
+.cart__button__proceed .cart__price__total h4, h2{
     margin: 0;
 }
 
-.cart__button__proceed .cart__price__total span{
-    font-size: 14px;
+.cart__button__proceed .cart__price__total h4{
     color: var(--grey);
 }
 
 
 .cart__button__proceed .proceed{
     height: 50px;
-    width: 120px;
-    background-color: black;
-    border: none;
+    width: 45%;
+    background-color: var(--dark);
     color: white;
-    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+    border-radius: 15px;
 }

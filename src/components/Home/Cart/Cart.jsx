@@ -195,8 +195,8 @@ const Cart = ({ homeToggle }) => {
                         {
                             <div className='cart__button__proceed'>
                                 <div className='cart__price__total'>
-                                    <span>Total price</span>
-                                    <h4>{`$ ${total}`}</h4>
+                                    <h4>Total price</h4>
+                                    <h2>{`$ ${total}`}</h2>
                                 </div>
                                 <button className='proceed' onClick={purchaseCart}>
                                     Proceed
