@@ -7,87 +7,150 @@ import '../Cart/Cart.css'
 import { BiArrowBack } from "react-icons/bi";
 import TechLogo from '../../../assets/TechLogo-Grey.png'
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { useDispatch, useSelector } from 'react-redux'
+import { getCart, plus } from '../../../store/slices/cart.slice'
+import { getProducts } from '../../../store/slices/products.slice'
+import swAlert from '@sweetalert/with-react'
 
 const Cart = ({ homeToggle }) => {
 
-    const [cart, setCart] = useState([])
-    const [products, setProducts] = useState([])
+
+    const cart = useSelector(state => state.cart)
+    const products = useSelector(state => state.products)
+    const dispatch = useDispatch()
+
+    const getCartUser = () => dispatch(getCart())
+    const getProductsUser = () => dispatch(getProducts())
+
+    const [cartUser, setCartUser] = useState()
 
     useEffect(() => {
+        getCartUser()
+        getProductsUser()
+        
+    }, [])
 
-        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart/'
+    useEffect(() => {
+        if (cart.length > 0) {
+            setCartUser(cart)
+        }
+    }, [cart])
+
+    // Plus
+
+    const plus = (id, quantity) => {
+        const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart`
 
         const config = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         }
-        axios.get(URL, config)
+
+        const data = {
+            id: id,
+            newQuantity: quantity + 1
+        }
+
+        axios.patch(URL, data, config)
             .then(res => {
-                setCart(res.data.data.cart.products)
+
+                getCartUser()
             })
-            .catch(error => {
-                console.log(error)
-                setCart('')
-            })
-
-
-        const URL2 = `https://ecommerce-api-react.herokuapp.com/api/v1/products`
-
-        axios.get(URL2, config)
-            .then(res => setProducts(res.data.data.products))
             .catch(error => console.log(error))
-        // const data = {
-        //     "street": "Green St. 1456",
-        //     "colony": "Southwest",
-        //     "zipCode": 12345,
-        //     "city": "USA",
-        //     "references": "Some references"
-        // }
-        // axios.post('https://ecommerce-api-react.herokuapp.com/api/v1/purchases',data,config)
-        //     .then(res => console.log(res.data))
-        //     .catch( error => console.log(error))
-    }, [])
-
-    console.log(cart)
-    console.log(products)
-
-    //Quantity function
-
-    const [quantity, setQuantity] = useState(1)
-
-    const plus = () => {
-        setQuantity(quantity + 1)
     }
-    const minus = () => {
+    const minus = (id, quantity, title) => {
         if (quantity > 1) {
-            setQuantity(quantity - 1)
+            const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart`
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+
+            const data = {
+                id: id,
+                newQuantity: quantity - 1
+            }
+
+            axios.patch(URL, data, config)
+                .then(res => {
+                    getCartUser()
+                })
+                .catch(error => console.log(error))
+        }
+        else if (quantity === 1) {
+            swAlert({
+                title: "Are you sure?",
+                text: `You will remove ${title} from your cart`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart/${id}`
+
+                        const config = {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem('token')}`
+                            }
+                        }
+
+                        axios.delete(URL, config)
+                            .then(res => {
+                                getCartUser()
+                            })
+                            .catch(error => console.log(error))
+                        swal(`You remove ${title} from your cart`, {
+                            icon: "success",
+                        });
+                    } else {
+                        swal(`${title} was not remove from the cart`);
+                    }
+                });
+
         }
 
     }
 
-    //Images array
+    const [total, setTotal] = useState(0)
 
-    // const [config, setConfig] = useState({
-    //     headers: {
-    //         Authorization: `Bearer ${localStorage.getItem('token')}`
-    //     }
-    // })
+    useEffect(() => {
+        let suma = 0
+        cart?.map(product =>{
+            suma +=(product?.price * product?.productsInCart.quantity)
+            
+        })
+        setTotal(suma)
+    }, [cart])
 
-    // useEffect(() => {
-    //     cart?.map(product => {
-
-    //     }
-
-    //     )
-    // }, [cart])
-
-    // const getImage = (id) =>{
-    //     axios.get(`https://ecommerce-api-react.herokuapp.com/api/v1/products/1`,config)
-    //         .then()
-    // }
-
-
+    const purchaseCart = () => {
+        const config = {
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        }
+        const address={
+            "street": "Green St. 1456",
+            "colony": "Southwest",
+            "zipCode": 12345,
+            "city": "USA",
+            "references": "Some references"
+        }
+        axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`,address,config)
+            .then(res => {
+                console.log(res.data)
+                swAlert(
+                    'Thanks for your purchase',
+                    'your purchase will arrive soon at your home',
+                    'success'
+                )
+                getCartUser()
+            })
+            .catch(error => console.log(error))
+    }
 
 
     return (
@@ -101,10 +164,16 @@ const Cart = ({ homeToggle }) => {
                 <img src={TechLogo} alt="Logo" className='img__header' />
             </div>
             {
-                cart ?
+                cart.length === 0 ?
+                    <div className='cart__empty'>
+                        <img src={Empty} alt="cart empty" />
+                        <h4>My Cart is Empty</h4>
+                    </div>
+                :
                     <div className='cart__products__section'>
                         {
                             cart?.map(product => (
+
                                 <div className='cart__product' key={product?.title}>
                                     <div className='cart__product__description'>
 
@@ -114,15 +183,15 @@ const Cart = ({ homeToggle }) => {
 
                                         <div className='cart__product__quantity'>
                                             <IconContext.Provider value={{ color: "white", className: "icon", size: '1em' }}>
-                                                <button className='cart__product__quantity__button__left' onClick={plus}>
+                                                <button className='cart__product__quantity__button__left' onClick={() => plus(product?.id, product?.productsInCart.quantity)} >
                                                     <AiOutlinePlus />
                                                 </button>
                                             </IconContext.Provider>
 
-                                            <div className='cart__product__quantity__label'>{quantity}</div>
+                                            <div className='cart__product__quantity__label'>{product?.productsInCart.quantity}</div>
 
                                             <IconContext.Provider value={{ color: "white", className: "icon", size: '1em' }}>
-                                                <button className='cart__product__quantity__button__right' onClick={minus}>
+                                                <button className='cart__product__quantity__button__right' onClick={() => minus(product?.id, product?.productsInCart.quantity, product?.title)}>
                                                     <AiOutlineMinus />
                                                 </button>
                                             </IconContext.Provider>
@@ -134,7 +203,7 @@ const Cart = ({ homeToggle }) => {
                                         {
                                             products?.map(prod => (
                                                 prod?.id === product?.id &&
-                                                <img src={prod?.productImgs[0]} alt="image" className='item__image' />
+                                                <img src={prod?.productImgs[0]} alt="image" className='item__image' key={prod?.id} />
                                             ))
                                         }
                                     </div>
@@ -143,13 +212,20 @@ const Cart = ({ homeToggle }) => {
 
                             ))
                         }
+                        {
+                            <div className='cart__button__proceed'>
+                                <div className='cart__price__total'>
+                                    <span>Total price</span>
+                                    <h4>{`$ ${total}`}</h4>
+                                </div>
+                                <button className='proceed' onClick={purchaseCart}>
+                                    Proceed
+                                </button>
+                            </div>
+                        }
                     </div>
 
-                    :
-                    <div className='cart__empty'>
-                        <img src={Empty} alt="cart empty" />
-                        <h4>My Cart is Empty</h4>
-                    </div>
+                    
             }
         </div>
     )

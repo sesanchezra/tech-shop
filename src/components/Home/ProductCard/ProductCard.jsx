@@ -4,6 +4,9 @@ import { GiShoppingBag } from "react-icons/gi";
 import { IconContext } from 'react-icons/lib';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {getCart} from '../../../store/slices/cart.slice'
+import { useDispatch } from 'react-redux';
+import swAlert from '@sweetalert/with-react'
 
 const ProductCard = ({ product, cartToggle , showError}) => {
 
@@ -23,6 +26,8 @@ const ProductCard = ({ product, cartToggle , showError}) => {
         }
     }
 
+    const dispatch = useDispatch()
+    const getCartUser = () => dispatch(getCart())
 
     
 
@@ -46,11 +51,21 @@ const ProductCard = ({ product, cartToggle , showError}) => {
             .then(res => {
                 console.log(res.data)
                 cartToggle()
-
+                getCartUser()
             })
             .catch (error => {
                 console.log(error)
-                showError()
+                if(error.response.data.message === "Email is already taken"){
+                    swAlert(
+                        'Oops !',
+                        'Sorry we have problems to add this product',
+                        'error'
+                    )
+                }
+                else if(error.response.data.message === "You already added this product to the cart") {
+                    showError()
+                }
+                
             })
     }
 
