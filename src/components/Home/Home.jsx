@@ -50,11 +50,19 @@ const Home = () => {
         
     }
     
+    const [profileShow, setProfileShow] = useState(false)
 
+    const toggleProfile = () => {
+        setProfileShow(!profileShow)
+    }
+
+    console.log(profileShow)
 
     return (
         <div className='Home'>
-            <div className='menu'>
+            {
+                !profileShow &&
+                <div className='menu'>
                 <div className='menu__home'>
                     <IconContext.Provider value={{ size: '2em', className: 'menu__home__button', color: 'white' }}>
                         <button className='menu__button' onClick={homeToggle}>
@@ -97,10 +105,18 @@ const Home = () => {
                     </IconContext.Provider>
                 </div>
             </div>
+
+            }
+            
             {
                 homeActive ?
                     <HomePage
                         cartToggle={cartToggle}
+                        homeToggle={homeToggle}
+                        favoriteToggle={favoriteToggle}
+                        cartToggle={cartToggle}
+                        toggleProfile={toggleProfile}
+                        profileShow={profileShow}
                     />
                     :
                     favorite ?

@@ -13,13 +13,16 @@ import NotFound from '../../../assets/NotFound.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../../store/slices/products.slice'
 import Error from '../../../assets/Error.png'
+import { AiFillHeart, AiOutlineHeart, AiFillHome, AiOutlineHome } from "react-icons/ai";
+import { RiShoppingBagFill, RiShoppingBagLine, RiSearchFill, RiSearchLine } from "react-icons/ri";
+import { HiClipboardList } from "react-icons/hi";
 
 const defaultValue = {
     search: ''
 }
 
 
-const HomePage = ({ cartToggle }) => {
+const HomePage = ({ cartToggle, homeToggle, favoriteToggle ,toggleProfile,profileShow}) => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -112,10 +115,108 @@ const HomePage = ({ cartToggle }) => {
         }, 1500);
     }
 
+    
+
     return (
         <div className='HomePage'>
+            
+                <div className={`homePage__profile__${profileShow}`}>
+                    <button className='user' onClick={toggleProfile} >
+                        <div className='img__user'>
+                            <img src={Emoji} alt="avatar" />
+                        </div>
+                        <div className='info__user'>
+                            <span>Hello!</span>
+                            <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
+                        </div>
+                    </button>
+
+                    <div className='menu__profile'>
+                        <div className='menu__profile__item'>
+                            <IconContext.Provider value={{ size: '2em', className: 'menu__home__button', color: 'white' }}>
+                                <button
+                                    className='menu__profile__item__button'
+                                    onClick={
+                                        () => {
+                                            homeToggle()
+                                            toggleProfile()
+                                        }}
+                                >
+                                    <AiFillHome />
+                                    
+                                </button>
+                            </IconContext.Provider>
+                            <span
+                                onClick={
+                                    () => {
+                                        homeToggle()
+                                        toggleProfile()
+                                    }}
+                            >Home</span>
+                            
+                        </div>
+                        <div className='menu__profile__item'>
+                            <IconContext.Provider value={{ size: '2em', className: 'menu__favorite__button', color: 'white' }}>
+                                <button 
+                                    className='menu__profile__item__button' 
+                                    onClick={
+                                        ()=>{
+                                            favoriteToggle()
+                                            toggleProfile()
+                                        }
+                                    }
+                                >
+                                    <AiFillHeart />
+                                </button>
+                            </IconContext.Provider>
+                            <span
+                                onClick={
+                                    ()=>{
+                                        favoriteToggle()
+                                        toggleProfile()
+                                    }
+                                }
+                            >Favorites</span>
+                        </div>
+                        <div className='menu__profile__item'>
+                            <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
+                                <button 
+                                    className='menu__profile__item__button' 
+                                    onClick={
+                                        ()=>{
+                                            cartToggle()
+                                            toggleProfile()
+                                        }
+                                        
+                                    }
+                                >
+                                    <RiShoppingBagFill />
+                                </button>
+                            </IconContext.Provider>
+                            <span
+                                onClick={
+                                        ()=>{
+                                            cartToggle()
+                                            toggleProfile()
+                                        }
+                                        
+                                    }
+                            >Cart</span>
+                        </div>
+                        <div className='menu__profile__item'>
+                            <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
+                                <button className='menu__profile__item__button' onClick={cartToggle}>
+                                    <HiClipboardList />
+                                </button>
+                            </IconContext.Provider>
+                            <span>Orders</span>
+                        </div>
+                    </div>
+                </div>
+
+            
             <div className='homePage__header'>
-                <div className='user'>
+                <button className='user' onClick={toggleProfile}>
                     <div className='img__user'>
                         <img src={Emoji} alt="avatar" />
                     </div>
@@ -123,7 +224,7 @@ const HomePage = ({ cartToggle }) => {
                         <span>Welcome</span>
                         <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
                     </div>
-                </div>
+                </button>
 
                 <div className='notifications'>
                     <IconContext.Provider value={{ size: '2.2em', color: 'rgb(180, 181, 183)' }}>
@@ -254,7 +355,7 @@ const HomePage = ({ cartToggle }) => {
                             ))
                 }
             </div>
-        </div>
+        </div >
     )
 }
 
