@@ -10,19 +10,22 @@ import ProductCard from '../ProductCard/ProductCard';
 import { useForm } from 'react-hook-form';
 import { BiArrowBack } from "react-icons/bi";
 import NotFound from '../../../assets/NotFound.png'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../../../store/slices/products.slice'
 import Error from '../../../assets/Error.png'
-import { AiFillHeart, AiOutlineHeart, AiFillHome, AiOutlineHome } from "react-icons/ai";
-import { RiShoppingBagFill, RiShoppingBagLine, RiSearchFill, RiSearchLine } from "react-icons/ri";
-import { HiClipboardList } from "react-icons/hi";
+import { AiFillHeart, AiFillHome } from "react-icons/ai"
+import { RiShoppingBagFill } from "react-icons/ri"
+import { HiClipboardList } from "react-icons/hi"
+
+import { GoSignOut } from "react-icons/go";
+import { useNavigate } from 'react-router-dom';
 
 const defaultValue = {
     search: ''
 }
 
 
-const HomePage = ({ cartToggle, homeToggle, favoriteToggle ,toggleProfile,profileShow}) => {
+const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hideProfile, profileShow ,orderToggle}) => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -115,108 +118,141 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle ,toggleProfile,profil
         }, 1500);
     }
 
-    
+    const navigate = useNavigate()
+
+
+    const signOut = () => {
+        localStorage.clear()
+        navigate('/')
+    }
 
     return (
         <div className='HomePage'>
-            
-                <div className={`homePage__profile__${profileShow}`}>
-                    <button className='user' onClick={toggleProfile} >
-                        <div className='img__user'>
-                            <img src={Emoji} alt="avatar" />
-                        </div>
-                        <div className='info__user'>
-                            <span>Hello!</span>
-                            <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
-                        </div>
-                    </button>
 
-                    <div className='menu__profile'>
-                        <div className='menu__profile__item'>
-                            <IconContext.Provider value={{ size: '2em', className: 'menu__home__button', color: 'white' }}>
-                                <button
-                                    className='menu__profile__item__button'
-                                    onClick={
-                                        () => {
-                                            homeToggle()
-                                            toggleProfile()
-                                        }}
-                                >
-                                    <AiFillHome />
-                                    
-                                </button>
-                            </IconContext.Provider>
-                            <span
+            <div className={`homePage__profile__${profileShow}`}>
+                <button className='user' onClick={hideProfile} >
+                    <div className='img__user'>
+                        <img src={Emoji} alt="avatar" />
+                    </div>
+                    <div className='info__user'>
+                        <span>Hello!</span>
+                        <h4>{`${user?.firstName} ${user?.lastName}`}</h4>
+                    </div>
+                </button>
+
+                <div className='menu__profile'>
+                    <div className='menu__profile__item'>
+                        <IconContext.Provider value={{ size: '2em', className: 'menu__home__button', color: 'white' }}>
+                            <button
+                                className='menu__profile__item__button'
                                 onClick={
                                     () => {
                                         homeToggle()
-                                        toggleProfile()
+                                        hideProfile()
                                     }}
-                            >Home</span>
-                            
-                        </div>
-                        <div className='menu__profile__item'>
-                            <IconContext.Provider value={{ size: '2em', className: 'menu__favorite__button', color: 'white' }}>
-                                <button 
-                                    className='menu__profile__item__button' 
-                                    onClick={
-                                        ()=>{
-                                            favoriteToggle()
-                                            toggleProfile()
-                                        }
-                                    }
-                                >
-                                    <AiFillHeart />
-                                </button>
-                            </IconContext.Provider>
-                            <span
+                            >
+                                <AiFillHome />
+
+                            </button>
+                        </IconContext.Provider>
+                        <span
+                            onClick={
+                                () => {
+                                    homeToggle()
+                                    hideProfile()
+                                }}
+                        >Home</span>
+
+                    </div>
+                    <div className='menu__profile__item'>
+                        <IconContext.Provider value={{ size: '2em', className: 'menu__favorite__button', color: 'white' }}>
+                            <button
+                                className='menu__profile__item__button'
                                 onClick={
-                                    ()=>{
+                                    () => {
                                         favoriteToggle()
-                                        toggleProfile()
+                                        hideProfile()
                                     }
                                 }
-                            >Favorites</span>
-                        </div>
-                        <div className='menu__profile__item'>
-                            <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
-                                <button 
-                                    className='menu__profile__item__button' 
-                                    onClick={
-                                        ()=>{
-                                            cartToggle()
-                                            toggleProfile()
-                                        }
-                                        
-                                    }
-                                >
-                                    <RiShoppingBagFill />
-                                </button>
-                            </IconContext.Provider>
-                            <span
+                            >
+                                <AiFillHeart />
+                            </button>
+                        </IconContext.Provider>
+                        <span
+                            onClick={
+                                () => {
+                                    favoriteToggle()
+                                    hideProfile()
+                                }
+                            }
+                        >Favorites</span>
+                    </div>
+                    <div className='menu__profile__item'>
+                        <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
+                            <button
+                                className='menu__profile__item__button'
                                 onClick={
-                                        ()=>{
-                                            cartToggle()
-                                            toggleProfile()
-                                        }
-                                        
+                                    () => {
+                                        cartToggle()
+                                        hideProfile()
                                     }
-                            >Cart</span>
-                        </div>
-                        <div className='menu__profile__item'>
-                            <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
-                                <button className='menu__profile__item__button' onClick={cartToggle}>
-                                    <HiClipboardList />
-                                </button>
-                            </IconContext.Provider>
-                            <span>Orders</span>
-                        </div>
+
+                                }
+                            >
+                                <RiShoppingBagFill />
+                            </button>
+                        </IconContext.Provider>
+                        <span
+                            onClick={
+                                () => {
+                                    cartToggle()
+                                    hideProfile()
+                                }
+
+                            }
+                        >Cart</span>
+                    </div>
+                    <div className='menu__profile__item'>
+                        <IconContext.Provider value={{ size: '2em', className: 'menu__cart__button', color: 'white' }}>
+                            <button
+                                className='menu__profile__item__button'
+                                onClick={
+                                    ()=>{
+                                        orderToggle()
+                                        hideProfile()
+                                    }
+                                }
+                            >
+                                <HiClipboardList />
+                            </button>
+                        </IconContext.Provider>
+                        <span
+                            onClick={
+                                () => {
+                                    orderToggle()
+                                    hideProfile()
+                                }
+
+                            }
+                        >Orders</span>
                     </div>
                 </div>
 
-            
+                <div className='options'>
+                    <IconContext.Provider value={{ size: '2.2em', color: 'white' }}>
+                        <button className='options__button' onClick={signOut}>
+                            <GoSignOut />
+                            <p>Sign Out</p>
+                        </button>
+
+
+                    </IconContext.Provider>
+                </div>
+            </div>
+
+
             <div className='homePage__header'>
-                <button className='user' onClick={toggleProfile}>
+                <button className='user' onClick={showProfile}>
                     <div className='img__user'>
                         <img src={Emoji} alt="avatar" />
                     </div>

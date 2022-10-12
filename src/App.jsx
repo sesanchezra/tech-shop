@@ -6,6 +6,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes'
 import Home from './components/Home/Home'
 import ProductDetail from './components/Home/Product Details/ProductDetail'
 import SignUp from './components/SignUp/SignUp'
+import Orders from './components/Home/Orders/Orders'
 
 function App() {
 
