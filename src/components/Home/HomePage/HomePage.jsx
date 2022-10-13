@@ -8,7 +8,7 @@ import axios from 'axios';
 import Category from '../Category/Category';
 import ProductCard from '../ProductCard/ProductCard';
 import { useForm } from 'react-hook-form';
-import { BiArrowBack } from "react-icons/bi";
+import { BiArrowBack, BiHistory } from "react-icons/bi";
 import NotFound from '../../../assets/NotFound.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../../../store/slices/products.slice'
@@ -264,8 +264,12 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
 
                 <div className='notifications'>
                     <IconContext.Provider value={{ size: '2.2em', color: 'rgb(180, 181, 183)' }}>
-                        <button className='notifications__button'>
-                            <IoMdNotifications />
+                        <button className='notifications__button'
+                            onClick={
+                                orderToggle
+                            }
+                        >
+                            <BiHistory />
                         </button>
 
                     </IconContext.Provider>
