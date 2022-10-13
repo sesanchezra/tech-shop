@@ -10,6 +10,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux'
 import { getCart, plus } from '../../../store/slices/cart.slice'
 import { getProducts } from '../../../store/slices/products.slice'
+import Checkout from '../../../assets/Checkout.png'
 
 
 const Cart = ({ homeToggle }) => {
@@ -54,7 +55,6 @@ const Cart = ({ homeToggle }) => {
 
         axios.patch(URL, data, config)
             .then(res => {
-
                 getCartUser()
             })
             .catch(error => console.log(error))
@@ -125,11 +125,22 @@ const Cart = ({ homeToggle }) => {
         }
         axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, address, config)
             .then(res => {
-                console.log(res.data)
-
-                getCartUser()
+                
+                    console.log(res.data)
+                    checkOutMessage()
+                    getCartUser()
+                
             })
             .catch(error => console.log(error))
+    }
+
+    const [checkoutMessageState, setCheckoutMessageState] = useState(false)
+
+    const checkOutMessage = () => {
+        setCheckoutMessageState(true)
+        setTimeout(() => {
+            setCheckoutMessageState(false)
+        }, 1500);
     }
 
 
@@ -144,7 +155,17 @@ const Cart = ({ homeToggle }) => {
                 <img src={TechLogo} alt="Logo" className='img__header' />
             </div>
             {
+                checkoutMessageState &&
+                <div className='error__adding__cart'>
+                    <div className='content'>
+                        <img src={Checkout} alt='chekcout' />
+                        <h5>Thanks for your purchase</h5>
+                    </div>
+                </div>
+            }
+            {
                 cart.length === 0 ?
+                    !checkoutMessageState &&
                     <div className='cart__empty'>
                         <img src={Empty} alt="cart empty" />
                         <h4>My Cart is Empty</h4>

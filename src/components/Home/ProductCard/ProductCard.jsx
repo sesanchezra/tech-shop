@@ -8,7 +8,7 @@ import {getCart} from '../../../store/slices/cart.slice'
 import { useDispatch } from 'react-redux';
 
 
-const ProductCard = ({ product, cartToggle , showError}) => {
+const ProductCard = ({ product, cartToggle , showError,showErrorApi}) => {
 
     const [positionScroll, setPositionScroll] = useState('start')
 
@@ -56,9 +56,7 @@ const ProductCard = ({ product, cartToggle , showError}) => {
             .catch (error => {
                 console.log(error)
                 if(error.response.data.message === "Email is already taken"){
-                    <div>
-                        <h2>Error</h2>
-                    </div>
+                    showErrorApi()
                 }
                 else if(error.response.data.message === "You already added this product to the cart") {
                     showError()

@@ -197,13 +197,16 @@
 
 .products .error__adding__cart .content{
     margin: 5%;
+    width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-
+.products .error__adding__cart .content h5{
+    text-align: center;
+}
 
 .products .error__adding__cart .content > img{ 
     width: 150px;

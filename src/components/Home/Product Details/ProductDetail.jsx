@@ -94,7 +94,12 @@ const ProductDetail = () => {
             })
             .catch(error => {
                 console.log(error)
-                showError()
+                if (error.response.data.message === "Email is already taken") {
+                    showErrorApi()
+                }
+                else if (error.response.data.message === "You already added this product to the cart") {
+                    showError()
+                }
             })
     }
 
@@ -151,66 +156,98 @@ const ProductDetail = () => {
         }, 1500);
     }
 
+    const [errorApi, setErrorApi] = useState(false)
+
+    const showErrorApi = () => {
+        setErrorApi(true)
+        setTimeout(() => {
+            setErrorApi(false)
+        }, 2000);
+    }
+
 
     return (
-        <div className='ProductDetail'>
-            {
-                errorToAddCart &&
-                <div className='error__adding__cart'>
-                    <div className='content'>
-                        <img src={Error} alt='error' />
-                        <h5>You already added this product to the cart</h5>
-                    </div>
+        <>
+            {!product &&
+                <div className='loading__container'>
+                    <div className="lds-dual-ring"></div>
+                    <h4>Loading ...</h4>
+                </div>
 
+            }
+            {
+                product &&
+
+                <div className='ProductDetail'>
+                    {
+                        errorToAddCart &&
+                        <div className='error__adding__cart'>
+                            <div className='content'>
+                                <img src={Error} alt='error' />
+                                <h5>You already added this product to the cart</h5>
+                            </div>
+
+                        </div>
+                    }
+                    {
+                        errorApi &&
+                        <div className='error__adding__cart'>
+                            <div className='content'>
+                                <img src={Error} alt='error' />
+                                <h5>Oops !, we have some problems try again later</h5>
+                            </div>
+
+                        </div>
+                    }
+                    <div className='productDetail__header'>
+                        <IconContext.Provider value={{ size: '1.6em', color: 'rgb(19, 19, 19)' }}>
+                            <button className='header__button' onClick={() => navigate(-1)}>
+                                <BiArrowBack />
+                            </button>
+                        </IconContext.Provider>
+                        <img src={TechLogo} alt="Logo" className='img__header' />
+
+                        <IconContext.Provider value={{ size: '1.8em', color: `${likeColor}` }}>
+                            <button className='header__button' onClick={addFavorites}>
+                                <AiFillHeart />
+                            </button>
+                        </IconContext.Provider>
+                    </div>
+                    <div className='productDetail__info'>
+                        <div className='info__images' onScroll={handleScroll}>
+                            {
+                                product?.productImgs.map((image, index) => (
+                                    <img src={image} alt={image} className='images__item' key={index} />
+                                ))
+                            }
+                        </div>
+                        <div className='index__points'>
+                            <div className={positionScroll === 'start' ? 'active' : 'inactive'}></div>
+                            <div className={positionScroll === 'middle' ? 'active' : 'inactive'}></div>
+                            <div className={positionScroll === 'end' ? 'active' : 'inactive'}></div>
+                        </div>
+                        <div className='product__description'>
+                            <div className='product__title'>
+                                <h2>{product?.title}</h2>
+                                <h4>{product?.category}</h4>
+                            </div>
+                            <div className='product__specifications'>
+                                <p>{product?.description}</p>
+                            </div>
+                        </div>
+                        <div className='product__action'>
+                            <div className='price'>
+                                <h4>Price</h4>
+                                <h2>{`$ ${product?.price}`}</h2>
+                            </div>
+                            <button className='button__cart' onClick={addToCart}>
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
                 </div>
             }
-            <div className='productDetail__header'>
-                <IconContext.Provider value={{ size: '1.6em', color: 'rgb(19, 19, 19)' }}>
-                    <button className='header__button' onClick={() => navigate(-1)}>
-                        <BiArrowBack />
-                    </button>
-                </IconContext.Provider>
-                <img src={TechLogo} alt="Logo" className='img__header' />
-
-                <IconContext.Provider value={{ size: '1.8em', color: `${likeColor}` }}>
-                    <button className='header__button' onClick={addFavorites}>
-                        <AiFillHeart />
-                    </button>
-                </IconContext.Provider>
-            </div>
-            <div className='productDetail__info'>
-                <div className='info__images' onScroll={handleScroll}>
-                    {
-                        product?.productImgs.map((image, index) => (
-                            <img src={image} alt={image} className='images__item' key={index} />
-                        ))
-                    }
-                </div>
-                <div className='index__points'>
-                    <div className={positionScroll === 'start' ? 'active' : 'inactive'}></div>
-                    <div className={positionScroll === 'middle' ? 'active' : 'inactive'}></div>
-                    <div className={positionScroll === 'end' ? 'active' : 'inactive'}></div>
-                </div>
-                <div className='product__description'>
-                    <div className='product__title'>
-                        <h2>{product?.title}</h2>
-                        <h4>{product?.category}</h4>
-                    </div>
-                    <div className='product__specifications'>
-                        <p>{product?.description}</p>
-                    </div>
-                </div>
-                <div className='product__action'>
-                    <div className='price'>
-                        <h4>Price</h4>
-                        <h2>{`$ ${product?.price}`}</h2>
-                    </div>
-                    <button className='button__cart' onClick={addToCart}>
-                        Add to Bag
-                    </button>
-                </div>
-            </div>
-        </div>
+        </>
     )
 }
 

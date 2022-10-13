@@ -25,7 +25,7 @@ const defaultValue = {
 }
 
 
-const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hideProfile, profileShow ,orderToggle}) => {
+const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hideProfile, profileShow, orderToggle }) => {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -126,6 +126,17 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
         navigate('/')
     }
 
+    //Api error after delete product 
+
+    const [errorApi, setErrorApi] = useState(false)
+
+    const showErrorApi = () => {
+        setErrorApi(true)
+        setTimeout(() => {
+            setErrorApi(false)
+        }, 2000);
+    }
+
     return (
         <div className='HomePage'>
 
@@ -217,7 +228,7 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
                             <button
                                 className='menu__profile__item__button'
                                 onClick={
-                                    ()=>{
+                                    () => {
                                         orderToggle()
                                         hideProfile()
                                     }
@@ -357,6 +368,15 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
 
                 }
                 {
+                    errorApi &&
+                    <div className='error__adding__cart'>
+                        <div className='content'>
+                            <img src={Error} alt='error' />
+                            <h5>Oops ! , We have some problems, try again later</h5>
+                        </div>
+                    </div>
+                }
+                {
                     searchActive ?
 
                         (searchResult.length > 0) ?
@@ -366,6 +386,7 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
                                     product={product}
                                     cartToggle={cartToggle}
                                     showError={showError}
+                                    showErrorApi={showErrorApi}
                                 />
                             ))
                             :
@@ -382,6 +403,7 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
                                     product={product}
                                     cartToggle={cartToggle}
                                     showError={showError}
+                                    showErrorApi={showErrorApi}
                                 />
                             ))
                             :
@@ -391,6 +413,7 @@ const HomePage = ({ cartToggle, homeToggle, favoriteToggle, showProfile, hidePro
                                     product={product}
                                     cartToggle={cartToggle}
                                     showError={showError}
+                                    showErrorApi={showErrorApi}
                                 />
                             ))
                 }

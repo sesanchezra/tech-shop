@@ -202,3 +202,38 @@
     border: none;
     border-radius: 15px;
 }
+
+
+.error__adding__cart{
+    width: 250px;
+    aspect-ratio: 1;
+    background-color: var(--light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+    position: fixed;
+    top: 35%;
+    left: calc((100vw - 250px)/2);
+    z-index: 10;
+    box-shadow: 10px 10px 50px 20px var(--grey);
+}
+
+.error__adding__cart .content{
+    margin: 5%;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.error__adding__cart .content h5{
+    text-align: center;
+}
+
+.error__adding__cart .content > img{ 
+    width: 150px;
+    object-fit: contain;
+}
