@@ -12,6 +12,7 @@ import { getCart, plus } from '../../../store/slices/cart.slice'
 import { getProducts } from '../../../store/slices/products.slice'
 import Checkout from '../../../assets/Checkout.png'
 import Swal from 'sweetalert2'
+import Warning from '../../../assets/Warning.png'
 
 const Cart = ({ homeToggle }) => {
 
@@ -88,10 +89,13 @@ const Cart = ({ homeToggle }) => {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You will delete this item from your cart",
-                icon: 'warning',
+                imageUrl: Warning,
+                imageWidth: 30,
+                imageHeight: 100,
+                imageAlt: 'Custom image',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: 'rgb(35, 38, 45)',
+                cancelButtonColor: 'rgb(180, 181, 183)',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
