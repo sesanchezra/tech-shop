@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCart, plus } from '../../../store/slices/cart.slice'
 import { getProducts } from '../../../store/slices/products.slice'
 import Checkout from '../../../assets/Checkout.png'
-
+import Swal from 'sweetalert2'
 
 const Cart = ({ homeToggle }) => {
 
@@ -59,6 +59,9 @@ const Cart = ({ homeToggle }) => {
             })
             .catch(error => console.log(error))
     }
+
+
+
     const minus = (id, quantity, title) => {
         if (quantity > 1) {
             const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart`
@@ -77,24 +80,46 @@ const Cart = ({ homeToggle }) => {
             axios.patch(URL, data, config)
                 .then(res => {
                     getCartUser()
+
                 })
                 .catch(error => console.log(error))
         }
         else if (quantity === 1) {
-            const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart/${id}`
-
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will delete this item from your cart",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const URL = `https://ecommerce-api-react.herokuapp.com/api/v1/cart/${id}`
+                    const config = {
+                        headers:{
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    }
+                    axios.delete(URL,config)
+                        .then(res => {
+                            Swal.fire(
+                                'Deleted!',
+                                'This product was deleted from your cart',
+                                'success'
+                            )
+                            getCartUser()
+                        })
+                        .catch(error =>{
+                            Swal.fire(
+                                'Oops !',
+                                'We have some problems to delete this product',
+                                'error'
+                            )
+                        })
+                    
                 }
-            }
-
-            axios.delete(URL, config)
-                .then(res => {
-                    getCartUser()
-                })
-                .catch(error => console.log(error))
-
+            })
         }
 
     }
@@ -125,11 +150,11 @@ const Cart = ({ homeToggle }) => {
         }
         axios.post(`https://ecommerce-api-react.herokuapp.com/api/v1/purchases`, address, config)
             .then(res => {
-                
-                    console.log(res.data)
-                    checkOutMessage()
-                    getCartUser()
-                
+
+                console.log(res.data)
+                checkOutMessage()
+                getCartUser()
+
             })
             .catch(error => console.log(error))
     }
@@ -163,6 +188,17 @@ const Cart = ({ homeToggle }) => {
                     </div>
                 </div>
             }
+            {/* {
+                deleteMessage &&
+                <div className='error__adding__cart'>
+                    <div className='content'>
+                        
+                        <h5>Do you want to remove this product from the cart ? </h5>
+                        <button >Cancel</button>
+                        <button >OK</button>
+                    </div>
+                </div>
+            } */}
             {
                 cart.length === 0 ?
                     !checkoutMessageState &&

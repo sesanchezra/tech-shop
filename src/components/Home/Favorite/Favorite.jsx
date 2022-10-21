@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import TechLogo from '../../../assets/TechLogo-Grey.png'
 import '../Favorite/Favorite.css'
 import FavoriteCard from '../FavoriteCard/FavoriteCard';
+import FavoriteError from '../../../assets/favorite.png'
 
 const Favorite = ({homeToggle}) => {
 
@@ -41,7 +42,10 @@ const Favorite = ({homeToggle}) => {
                         />
                     ))
                     :
-                        <h2>It´s empty</h2>
+                        <div className='favorite__empty'>
+                            <img src={FavoriteError} alt="favorite" />
+                            <h2>It's empty</h2>
+                        </div>
                 }
             </div>
         </div>

@@ -42,3 +42,19 @@
     margin-bottom: 18vh;
     box-sizing: border-box;
 }
+
+.favorite__empty{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    position: relative;
+    top: 60%;
+    gap: 2.7vh;
+}
+
+.favorite__empty img{
+    position: relative;
+    left: 2.5%;
+}
